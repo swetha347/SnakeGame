@@ -7,7 +7,7 @@
 
 ## Screen shots
 ### loading screen
-![image](https://github.com/user-attachments/assets/c5c39e42-0c6b-429d-9aea-189ecfe68493)
+![image](https://github.com/user-attachments/assets/7dbef933-7333-42fb-b421-c0224accc425)
 
 ### Gameplay
 ![image](https://github.com/user-attachments/assets/bff693be-b694-4faf-91ac-74bb508eee73)
