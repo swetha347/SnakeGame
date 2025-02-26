@@ -23,9 +23,9 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
-
-
-
+    boolean startScreen = true;
+    boolean state = false;
+    static final int GLOW_DELAY = 800;
 
     GamePanel () {
         random = new Random();
@@ -37,9 +37,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void startGame() {
+        startScreen = true;
         newApple();
         running = true;
-        timer = new Timer(DELAY, this);
+        timer = new Timer(GLOW_DELAY, this);
         timer.start();
     }
 
@@ -61,6 +62,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
+
+        if(startScreen) {
+            showStartScreen(g);
+            return;
+        }
+
         if(!running) {
             gameOver(g);
             return;
@@ -84,6 +91,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             } else {
 //                g.setColor(new Color(45, 180, 0));
+//                g.setColor(color);
                 g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
                 g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             }
@@ -91,6 +99,30 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         drawScore(g);
+    }
+
+    private void showStartScreen(Graphics g) {
+        //Title
+        g.setColor(Color.green);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("The Snake Game", (SCREEN_WIDTH - metrics.stringWidth("The Snake Game"))/2, SCREEN_HEIGHT/2);
+
+        if(state) {
+            g.setColor(Color.white);
+            g.setFont(new Font("Consolas", Font.PLAIN, 25));
+            FontMetrics metrics2 = getFontMetrics(g.getFont());
+            g.drawString("Press any button to start", (SCREEN_WIDTH - metrics2.stringWidth("Press any button to start")) / 2, SCREEN_HEIGHT / 2 + g.getFont().getSize() * 2);
+        }
+        //Author
+        g.setColor(Color.gray);
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+
+        g.drawString("- by Swetha347", (SCREEN_WIDTH - metrics3.stringWidth("- by Swetha347")), SCREEN_HEIGHT - g.getFont().getSize());
+
+
+
     }
 
     public void newApple() {
@@ -172,7 +204,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(running) {
+        if(startScreen) {
+            state = !state;
+        } else if(running) {
             move();
             checkApple();
             checkCollisions();
@@ -210,8 +244,19 @@ public class GamePanel extends JPanel implements ActionListener {
                         reset();
                     }
                     break;
+                default:
+                    if(startScreen) {
+                        stopStartScreen();
+                    }
             }
         }
+    }
+
+    public void stopStartScreen() {
+        startScreen = false;
+        timer.stop();
+        timer = new Timer(DELAY,this);
+        timer.start();
     }
 
 }
