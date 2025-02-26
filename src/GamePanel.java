@@ -112,7 +112,7 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setColor(Color.white);
             g.setFont(new Font("Consolas", Font.PLAIN, 25));
             FontMetrics metrics2 = getFontMetrics(g.getFont());
-            g.drawString("Press any button to start", (SCREEN_WIDTH - metrics2.stringWidth("Press any button to start")) / 2, SCREEN_HEIGHT / 2 + g.getFont().getSize() * 2);
+            g.drawString("[Press any button to start]", (SCREEN_WIDTH - metrics2.stringWidth("[Press any button to start]")) / 2, SCREEN_HEIGHT / 2 + g.getFont().getSize() * 2);
         }
         //Author
         g.setColor(Color.gray);
